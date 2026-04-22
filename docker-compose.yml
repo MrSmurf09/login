@@ -1,0 +1,20 @@
+services:
+  login_frontend:
+    container_name: login_frontend
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ${APP_COMMAND:-pnpm run dev}
+    ports:
+      - 6003:6003
+    volumes:
+      - ./src:/app
+      - /app/node_modules
+      - ../../../packages/shared-types:/packages/shared-types
+    networks:
+      - mf_network
+
+networks:
+  mf_network:
+    external: true
